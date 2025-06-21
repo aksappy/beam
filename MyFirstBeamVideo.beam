@@ -1,0 +1,84 @@
+camera {
+    width: 1280,
+    height: 720,
+    background_color: #1A1A1A,
+}
+
+scene "SceneOne" {
+    duration: 3s
+
+    square "my_box" {
+        size: 150,
+        fill: #D8A000,
+        border_color: #FFFFFF,
+        position: (75, 360),
+    }
+}
+
+timeline for "SceneOne" {
+    at 0s to 2s, "my_box".position -> (1205, 360), with ease_in_out;
+    at 2s to 3s, "my_box".position -> (75, 360), with ease_in_out;
+}
+
+scene "SceneTwo" {
+    circle "my_circle" {
+        radius: 10,
+        border_color: #00A0D8,
+        position: (640, 360),
+    }
+}
+
+scene "Triangle" {
+   triangle "my_triangle" {
+        p1: (10, 10),
+        p2: (100, 10),
+        p3: (55, 100),
+        fill: #00FF00,
+        rotation: 0,
+    }
+}
+
+timeline for "Triangle" {
+    at 0s to 2s, "my_triangle".rotation -> 360;
+}
+
+timeline for "SceneTwo" {
+    at 0s to 1s, "my_circle".radius -> 100;
+    at 1s to 2s, "my_circle".radius -> 10;
+}
+
+scene "NewShapes" {
+    duration: 2s
+    rectangle "my_rect" {
+        position: (200, 200),
+        width: 200,
+        height: 100,
+        fill: #4A90E2,
+    }
+
+    ellipse "my_ellipse" {
+        position: (500, 200),
+        rx: 100,
+        ry: 50,
+        fill: #E24A90,
+        border_color: #FFFFFF,
+    }
+
+    line "my_line" {
+        p1: (100, 400),
+        p2: (600, 400),
+        border_color: #7ED321,
+    }
+
+    arrow "my_arrow" {
+        p1: (100, 500),
+        p2: (600, 500),
+        border_color: #F5A623,
+    }
+
+    double_arrow "my_double_arrow" {
+        p1: (100, 600),
+        p2: (600, 600),
+        border_color: #BD10E0,
+    }
+}

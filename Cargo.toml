@@ -1,0 +1,15 @@
+[package]
+name = "beam"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.5.4", features = ["derive"] }
+image = "0.25.1"
+imageproc = "0.25.0"
+indicatif = { version = "0.17.7", features = ["rayon"] }
+pest = "2.7.7"
+pest_derive = "2.7.7"
+rayon = "1.8.1"
+vello = "0.5.0"
+pollster = "0.3.0"

@@ -1,0 +1,46 @@
+WHITESPACE = _{ " " | "\t" | "\n" | "\r" }
+COMMENT = _{ "/*" ~ (!"*/" ~ ANY)* ~ "*/" | "//" ~ (!("\n" | "\r") ~ ANY)* }
+
+// General constructs
+identifier = @{ (ASCII_ALPHA | "_") ~ (ASCII_ALPHANUMERIC | "_")* }
+string_literal = @{ "\"" ~ ( !("\"") ~ ANY )* ~ "\"" }
+number = @{ ("-")? ~ (ASCII_DIGIT)+ ~ ("." ~ (ASCII_DIGIT)+)? }
+hex_color = @{ "#" ~ (ASCII_HEX_DIGIT){6} }
+
+// Values
+value = { hex_color | tuple | number | string_literal }
+tuple = { "(" ~ number ~ "," ~ number ~ ")" }
+
+// Properties
+property = { identifier ~ ":" ~ value ~ (",")? }
+
+// Objects
+object_type = @{ "circle" | "square" | "text" | "group" | "triangle" | "rectangle" | "ellipse" | "line" | "arrow" | "double_arrow" | "vector" }
+object = { object_type ~ string_literal ~ "{" ~ property* ~ "}" }
+
+// Scene
+scene_duration = { "duration" ~ ":" ~ time_value }
+scene_content = _{ object | scene_duration | COMMENT }
+scene = { "scene" ~ string_literal ~ "{" ~ scene_content* ~ "}" }
+
+// Timeline
+time_unit = { "s" | "ms" }
+time_value = { number ~ time_unit }
+
+target_property = { string_literal ~ "." ~ identifier }
+
+animation_range = { "at" ~ time_value ~ "to" ~ time_value }
+animation_instant = { "at" ~ time_value }
+animation_time = { animation_range | animation_instant }
+
+animation_easing = { "with" ~ identifier }
+
+animation = { animation_time ~ "," ~ target_property ~ "->" ~ value ~ ("," ~ animation_easing)? ~ ";" }
+
+timeline = { "timeline" ~ "for" ~ string_literal ~ "{" ~ animation* ~ "}" }
+
+// Camera
+camera = { "camera" ~ "{" ~ property* ~ "}" }
+
+// File
+file = { SOI ~ (scene | timeline | camera | COMMENT)* ~ EOI } 

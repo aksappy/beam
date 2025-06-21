@@ -1,0 +1,6 @@
+/target
+*.mp4
+*.png
+.cursorrules
+.DS_Store
+.vscode
